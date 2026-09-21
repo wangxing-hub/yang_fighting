@@ -47,6 +47,7 @@ PAD = 4                # 公共包围盒外扩像素
 NOISE = 220            # 小于这么多像素的孤立碎块当噪点扔掉
 BAND = (0.28, 0.72)    # 人物「主体带」在格子里的横向比例，用来判断碎块要不要留
 AVATAR_SIZE = 224      # 对话头像输出尺寸
+SHEET_SMALL = 0.7      # 精灵表生成网页小图时再缩多少（人物约 170px 高，还有 1.5 倍余量）
 
 # --------------------------------------------------------------------------- 素材清单
 #
@@ -58,6 +59,7 @@ CHARACTERS = [
     {
         "id": "yang",
         "name": "杨凡",
+        "unit": 314.5,   # 这个角色在"处理过的大图"里有多高（照 杨凡移动精灵图 量的）
         "sheets": [
             {"id": "yang_walk", "src": "杨凡移动精灵图.png", "cell": 672, "frames": 9, "ref": 0},
             {"id": "yang_attack", "src": "杨攻击动作雪碧图.png", "cell": 832, "frames": 6, "ref": 0, "bleed": True},
@@ -68,6 +70,7 @@ CHARACTERS = [
     {
         "id": "pan",
         "name": "潘尔赛",
+        "unit": 311.0,
         "sheets": [
             {"id": "pan_walk", "src": "潘尔赛的人物精灵图.png", "cell": 672, "frames": 9, "ref": 0},
             {"id": "pan_strike", "src": "潘尔赛的空手投掷动作.png", "cell": 832, "frames": 6, "ref": 0, "bleed": True},
@@ -78,6 +81,7 @@ CHARACTERS = [
     {
         "id": "huang",
         "name": "黄姐",
+        "unit": 281.5,   # 黄姐的比例基准是旧的走路图（护士图是另一个绘制比例，不能当基准）
         "sheets": [
             {"id": "huang_walk", "src": "黄姐移动精灵图.png", "cell": 672, "frames": 9, "ref": 0},
             {"id": "huang_nurse", "src": "护士黄姐移动雪碧图.png", "cell": 832, "frames": 6, "ref": 0},
@@ -116,26 +120,27 @@ BACKGROUNDS = [
 # 小图任务：源图（assets/ 里的大图）-> assets/small/ 下的 webp
 #   scale   ：还要不要再缩小（人物只显示 170px 高，缩到 0.8 倍仍然有 1.7 倍余量，
 #             在手机上看起来才不糊）
-#   quality ：None = 无损（人物 / 头像这种带透明边缘的不能有压缩脏边），
-#             数字 = 有损质量（背景照片类）
+#   quality ：数字 = 有损质量（配合 -alpha_q 100，alpha 通道无损），None = 完全无损
+#
+# 人物贴图用「有损 q86」：实测平均色差 1.9/255、最大单通道差 17，
+# 而边缘的 alpha 一个像素都没变（不会出现脏边），体积只有无损的 23%。
 SMALL_JOBS = [
     # 精灵表要按"每帧宽度"对齐着缩，不然整张图缩完跟 frameWidth 对不上，最后一帧会偏几像素
-    {"src": "yang_walk.png", "scale": 0.7, "quality": None, "frames": 9},
-    {"src": "yang_attack.png", "scale": 0.7, "quality": None, "frames": 6},
-    {"src": "yang_strike.png", "scale": 0.7, "quality": None, "frames": 6},
-    {"src": "yang_noodle.png", "scale": 0.7, "quality": None, "frames": 6},
-    {"src": "pan_walk.png", "scale": 0.7, "quality": None, "frames": 9},
-    {"src": "pan_strike.png", "scale": 0.7, "quality": None, "frames": 6},
-    {"src": "pan_pan.png", "scale": 0.7, "quality": None, "frames": 6},
-    {"src": "pan_crab.png", "scale": 0.7, "quality": None, "frames": 6},
-    {"src": "huang_walk.png", "scale": 0.7, "quality": None, "frames": 9},
-    {"src": "huang_nurse.png", "scale": 0.7, "quality": None, "frames": 6},
-    {"src": "huang_durian.png", "scale": 0.7, "quality": None, "frames": 6},
-    {"src": "huang_needle.png", "scale": 0.7, "quality": None, "frames": 6},
+    {"src": "yang_walk.png", "scale": 0.7, "quality": 86, "frames": 9},
+    {"src": "yang_attack.png", "scale": 0.7, "quality": 86, "frames": 6},
+    {"src": "yang_noodle.png", "scale": 0.7, "quality": 86, "frames": 6},
+    {"src": "pan_walk.png", "scale": 0.7, "quality": 86, "frames": 9},
+    {"src": "pan_strike.png", "scale": 0.7, "quality": 86, "frames": 6},
+    {"src": "pan_pan.png", "scale": 0.7, "quality": 86, "frames": 6},
+    {"src": "pan_crab.png", "scale": 0.7, "quality": 86, "frames": 6},
+    {"src": "huang_nurse.png", "scale": 0.7, "quality": 86, "frames": 6},
+    {"src": "huang_durian.png", "scale": 0.7, "quality": 86, "frames": 6},
+    {"src": "huang_needle.png", "scale": 0.7, "quality": 86, "frames": 6},
+    # 杨的旧投掷动作、黄姐的旧便服走路、松鸭湖背景现在都用不到了：
+    # 处理好的大图留在 assets/ 当素材档案，不再生成网页小图
     {"src": "avatar_pan.png", "scale": 0.72, "quality": None},
     {"src": "avatar_huang.png", "scale": 0.72, "quality": None},
     {"src": "avatar_yang.png", "scale": 0.72, "quality": None},
-    {"src": "lake_bg.png", "scale": 1.0, "quality": 82},
 ]
 
 
@@ -857,7 +862,8 @@ def process_small_assets() -> None:
         if job["quality"] is None:
             cmd += ["-lossless", "-z", "9"]
         else:
-            cmd += ["-q", str(job["quality"]), "-m", "6"]
+            # -alpha_q 100：alpha 通道保持无损，人物边缘不会脏
+            cmd += ["-q", str(job["quality"]), "-m", "6", "-alpha_q", "100"]
         cmd += [str(tmp), "-o", str(out)]
         subprocess.run(cmd, check=True)
         tmp.unlink()
@@ -884,6 +890,7 @@ def print_config_snippet(coef: float) -> None:
     所以帧尺寸、脚底坐标、人物高度都要跟着乘一次；origin 用比例所以不受影响。
     """
     scales = {Path(j["src"]).stem: j["scale"] for j in SMALL_JOBS}
+    units = {c["id"]: c["unit"] for c in CHARACTERS}
     rows = []
     for path in sorted(ASSETS.glob("*.json")):
         meta = json.loads(path.read_text(encoding="utf-8"))
@@ -907,8 +914,7 @@ def print_config_snippet(coef: float) -> None:
         if char_id not in by_char:
             continue
         sheets = by_char[char_id]
-        walk = next((m for m in sheets if m["role"] == "walk"), None)
-        height = round(walk["unit"] * walk["small"] * coef, 1)
+        height = round(units.get(char_id, sheets[0]["unit"]) * SHEET_SMALL * coef, 1)
         print(f"\n// {char_id}：屏幕上高 {height}px")
         for m in sheets:
             s = m["small"]

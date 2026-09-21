@@ -38,11 +38,8 @@ export default class BootScene extends Phaser.Scene {
       pct.setText(`正在加载素材… ${Math.round(v * 100)}%`);
     });
 
-    Object.entries(SHEETS).forEach(([key, s]) => {
-      if (!this.textures.exists(key)) {
-        this.load.spritesheet(key, s.path, { frameWidth: s.w, frameHeight: s.h });
-      }
-    });
+    // 这里只加载标题页就要用的三个头像（几十 KB），让标题页立刻能出来；
+    // 人物精灵表交给 TitleScene 在后台慢慢拉（见 TitleScene.queueFightAssets）
     Object.values(CHARACTERS).forEach((c) => {
       if (!this.textures.exists(c.avatar)) {
         this.load.image(c.avatar, `assets/small/${c.avatar.replace('-', '_')}.webp`);

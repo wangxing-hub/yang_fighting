@@ -1,4 +1,4 @@
-import { CHARACTERS, FONT, GAME_HEIGHT, GAME_WIDTH, STAGE } from '../config.js';
+import { CHARACTERS, FONT, GAME_HEIGHT, GAME_WIDTH, SHEETS, STAGE } from '../config.js';
 import { linear, radialEllipse, makeTexture } from '../art/canvasKit.js';
 import { requestLandscape } from '../systems/orientation.js';
 import { setIntensity, startMusic } from '../systems/audio.js';
@@ -44,8 +44,33 @@ export default class TitleScene extends Phaser.Scene {
     this.drawStart();
     addMusicButton(this);
     setIntensity('title');
+    this.queueFightAssets();
 
     this.cameras.main.fadeIn(300, 8, 6, 5);
+  }
+
+  /**
+   * 人物精灵表在标题页后台下载：标题页只需要几十 KB 的头像就能显示，
+   * 打架用的十来张图趁玩家看标题、选模式的时候悄悄拉完。
+   * 加载进度直接显示在"开始挑战"按钮上，没下完就点会等它下完自动开始。
+   */
+  queueFightAssets() {
+    const missing = Object.entries(SHEETS).filter(([key]) => !this.textures.exists(key));
+    this.assetsReady = missing.length === 0;
+    if (this.assetsReady) return;
+
+    missing.forEach(([key, s]) => {
+      this.load.spritesheet(key, s.path, { frameWidth: s.w, frameHeight: s.h });
+    });
+    this.load.on('progress', (v) => {
+      this.startText?.setText(`素材加载中 ${Math.round(v * 100)}%`);
+    });
+    this.load.once('complete', () => {
+      this.assetsReady = true;
+      this.startText?.setText('开始挑战');
+      if (this.pendingStart) this.launch();
+    });
+    this.load.start();
   }
 
   backdrop() {
@@ -195,7 +220,7 @@ export default class TitleScene extends Phaser.Scene {
       .rectangle(GAME_WIDTH / 2, y, 420, 66, 0xc9a44c, 0.9)
       .setStrokeStyle(3, 0xffe9a8, 0.7)
       .setInteractive({ useHandCursor: true });
-    this.add
+    this.startText = this.add
       .text(GAME_WIDTH / 2, y, '开始挑战', {
         fontFamily: FONT,
         fontSize: '30px',
@@ -204,14 +229,26 @@ export default class TitleScene extends Phaser.Scene {
       })
       .setOrigin(0.5);
     const go = () => {
-      this.registry.set('inputMode', this.mode);
-      startMusic();
-      if (this.mode === 'mobile') requestLandscape();
-      this.cameras.main.fadeOut(280, 8, 6, 5);
-      this.cameras.main.once('camerafadeoutcomplete', () => this.scene.start('FightScene'));
+      startMusic(); // 用户手势里把音乐开起来
+      if (!this.assetsReady) {
+        // 素材还没下完：记一笔，下完自动进关
+        this.pendingStart = true;
+        this.startText.setText('素材准备中…');
+        return;
+      }
+      this.launch();
     };
     btn.on('pointerdown', go);
     this.input.keyboard.on('keydown-ENTER', go);
     this.input.keyboard.on('keydown-SPACE', go);
+  }
+
+  launch() {
+    if (this.launched) return;
+    this.launched = true;
+    this.registry.set('inputMode', this.mode);
+    if (this.mode === 'mobile') requestLandscape();
+    this.cameras.main.fadeOut(280, 8, 6, 5);
+    this.cameras.main.once('camerafadeoutcomplete', () => this.scene.start('FightScene'));
   }
 }

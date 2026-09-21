@@ -6,6 +6,7 @@ import {
   GAME_WIDTH,
   KEYS,
   PROJECTILES,
+  SHEETS,
   STAGE,
 } from '../config.js';
 import Player from '../objects/Player.js';
@@ -33,6 +34,15 @@ const FACING_VEC = {
 export default class FightScene extends Phaser.Scene {
   constructor() {
     super('FightScene');
+  }
+
+  preload() {
+    // 保险：正常流程里贴图在标题页就下好了；万一从别处直接进关，这里补一下
+    Object.entries(SHEETS).forEach(([key, s]) => {
+      if (!this.textures.exists(key)) {
+        this.load.spritesheet(key, s.path, { frameWidth: s.w, frameHeight: s.h });
+      }
+    });
   }
 
   create() {
