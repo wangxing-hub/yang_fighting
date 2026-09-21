@@ -25,7 +25,7 @@ export default class BootScene extends Phaser.Scene {
       })
       .setOrigin(0.5);
     this.add
-      .text(GAME_WIDTH / 2, GAME_HEIGHT / 2 - 30, '杨凡大战潘尔赛', {
+      .text(GAME_WIDTH / 2, GAME_HEIGHT / 2 - 30, '泡面杨大战神雕侠侣', {
         fontFamily: FONT,
         fontSize: '44px',
         color: '#f7ead0',

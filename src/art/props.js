@@ -188,44 +188,88 @@ function drawNeedle(ctx, w, h) {
 }
 
 /** 泡面：桶装方便面，飞行时桶身朝前 */
+/**
+ * 泡面：桶装方便面。
+ * 之前画得太窄太高，看着像个纸杯——现在改成"上宽下窄的圆台"，
+ * 桶口有个掀开一角的锡纸盖，冒两根弯弯的面出来，一眼能认出是泡面。
+ */
 function drawNoodle(ctx, w, h) {
   const cx = w * 0.5;
-  const cy = h * 0.5;
+  const cy = h * 0.56;
+  const topW = w * 0.86;
+  const botW = w * 0.6;
+  const cupH = h * 0.46;
+  const half = cupH / 2;
+  // 桶身在某个 y 处的宽度（上宽下窄）
+  const widthAt = (y) => topW + (botW - topW) * ((y + half) / cupH);
+
   ctx.save();
   ctx.translate(cx, cy);
-  ctx.rotate(-0.12);
+  ctx.rotate(-0.08);
+
+  // 桶身
   ctx.beginPath();
-  roundRect(ctx, -w * 0.24, -h * 0.34, w * 0.48, h * 0.68, 10);
-  ctx.fillStyle = '#f2f0e6';
+  ctx.moveTo(-topW / 2, -half);
+  ctx.lineTo(topW / 2, -half);
+  ctx.lineTo(botW / 2, half);
+  ctx.quadraticCurveTo(0, half + 5, -botW / 2, half);
+  ctx.closePath();
+  ctx.fillStyle = '#f7f3e9';
   ctx.fill();
   outline(ctx, 5);
+
+  // 红色腰封（贴着桶身的斜度）
+  const bandTop = -half * 0.1;
+  const bandBot = half * 0.42;
+  const bw0 = widthAt(bandTop) / 2;
+  const bw1 = widthAt(bandBot) / 2;
   ctx.beginPath();
-  roundRect(ctx, -w * 0.29, -h * 0.42, w * 0.58, h * 0.16, 7);
+  ctx.moveTo(-bw0, bandTop);
+  ctx.lineTo(bw0, bandTop);
+  ctx.lineTo(bw1, bandBot);
+  ctx.lineTo(-bw1, bandBot);
+  ctx.closePath();
   ctx.fillStyle = '#d8472f';
   ctx.fill();
-  outline(ctx, 5);
-  ctx.beginPath();
-  roundRect(ctx, -w * 0.24, -h * 0.06, w * 0.48, h * 0.3, 6);
-  ctx.fillStyle = '#e8b23c';
-  ctx.fill();
-  outline(ctx, 3);
-  ctx.restore();
-  // 冒出来的热气
-  ctx.strokeStyle = 'rgba(255,255,255,0.75)';
-  ctx.lineWidth = 3;
-  for (let i = -1; i <= 1; i += 1) {
-    ctx.beginPath();
-    ctx.moveTo(cx + i * w * 0.13, cy - h * 0.44);
-    ctx.quadraticCurveTo(
-      cx + i * w * 0.13 + w * 0.08,
-      cy - h * 0.54,
-      cx + i * w * 0.13,
-      cy - h * 0.63
-    );
-    ctx.stroke();
-  }
-}
+  ctx.strokeStyle = 'rgba(255,255,255,0.55)';
+  ctx.lineWidth = 2;
+  ctx.stroke();
 
+  // 腰封上的两条小字（抽象成两道白条就够了）
+  ctx.fillStyle = 'rgba(255,255,255,0.8)';
+  ctx.fillRect(-bw0 * 0.5, bandTop + (bandBot - bandTop) * 0.26, bw0, 3);
+  ctx.fillRect(-bw0 * 0.34, bandTop + (bandBot - bandTop) * 0.55, bw0 * 0.68, 3);
+
+  // 桶口
+  ctx.beginPath();
+  ctx.ellipse(0, -half, topW / 2, topW * 0.15, 0, 0, Math.PI * 2);
+  ctx.fillStyle = '#ded6c6';
+  ctx.fill();
+  outline(ctx, 4);
+
+  // 掀开一角的锡纸盖
+  ctx.save();
+  ctx.translate(topW * 0.16, -half - 7);
+  ctx.rotate(-0.42);
+  ctx.beginPath();
+  roundRect(ctx, -topW * 0.36, -6, topW * 0.7, 12, 5);
+  ctx.fillStyle = '#eae3d4';
+  ctx.fill();
+  outline(ctx, 4);
+  ctx.restore();
+
+  // 冒出来的两根面
+  ctx.strokeStyle = '#f0c250';
+  ctx.lineCap = 'round';
+  ctx.lineWidth = 5;
+  [-topW * 0.12, topW * 0.12].forEach((dx, i) => {
+    ctx.beginPath();
+    ctx.moveTo(dx, -half - 1);
+    ctx.quadraticCurveTo(dx + (i ? 6 : -6), -half - 9, dx + (i ? 1 : -1), -half - 14);
+    ctx.stroke();
+  });
+  ctx.restore();
+}
 const DRAWERS = {
   pan: drawPan,
   crab: drawCrab,
@@ -239,7 +283,7 @@ const SIZES = {
   crab: [96, 84],
   durian: [88, 88],
   needle: [120, 56],
-  noodle: [84, 96],
+  noodle: [74, 76],
 };
 
 /** 把所有飞行道具贴图建出来（key = `prop-<名字>`） */

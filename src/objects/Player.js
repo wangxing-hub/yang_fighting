@@ -1,6 +1,6 @@
 import Fighter from './Fighter.js';
 
-/** 玩家（杨凡）：把输入翻译成移动 / 普攻 / 投掷 / 跳跃 */
+/** 玩家（泡面杨）：把输入翻译成移动 / 普攻 / 投掷 / 跳跃 */
 export default class Player extends Fighter {
   constructor(scene, x, y) {
     super(scene, 'yang', x, y);

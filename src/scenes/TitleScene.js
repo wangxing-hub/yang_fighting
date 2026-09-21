@@ -22,7 +22,7 @@ export default class TitleScene extends Phaser.Scene {
     this.add.image(0, 0, STAGE.artKey).setOrigin(0).setAlpha(0.3).setDepth(-990);
 
     this.add
-      .text(GAME_WIDTH / 2, 92, '杨凡大战潘尔赛', {
+      .text(GAME_WIDTH / 2, 92, '泡面杨大战神雕侠侣', {
         fontFamily: FONT,
         fontSize: '66px',
         color: '#fff3d6',
@@ -32,7 +32,7 @@ export default class TitleScene extends Phaser.Scene {
       })
       .setOrigin(0.5);
     this.add
-      .text(GAME_WIDTH / 2, 150, '第一关 · 银行门口 · 一对二', {
+      .text(GAME_WIDTH / 2, 150, '第一关 · 银行门口 · 一个人打一对夫妻', {
         fontFamily: FONT,
         fontSize: '22px',
         color: '#e5cfa4',
@@ -68,7 +68,7 @@ export default class TitleScene extends Phaser.Scene {
     return key;
   }
 
-  /** 左边杨凡（玩家），右边两个敌人 */
+  /** 左边泡面杨（玩家），右边神雕侠侣（两个敌人） */
   drawFighters() {
     const yang = CHARACTERS.yang;
     const pan = CHARACTERS.pan;
@@ -76,7 +76,7 @@ export default class TitleScene extends Phaser.Scene {
 
     this.avatarCard(yang, 300, 320, 1.5, '玩家', '#ffe9a8');
     this.add
-      .text(300, 470, '杨凡', {
+      .text(300, 470, yang.name, {
         fontFamily: FONT,
         fontSize: '30px',
         color: '#fff3d6',
@@ -96,25 +96,44 @@ export default class TitleScene extends Phaser.Scene {
       })
       .setOrigin(0.5);
 
+    this.add
+      .text(995, 208, '神雕侠侣', {
+        fontFamily: FONT,
+        fontSize: '24px',
+        color: '#ffd7a8',
+        fontStyle: 'bold',
+      })
+      .setOrigin(0.5);
     this.avatarCard(pan, 900, 320, 1.2, '', '#ffd7a8');
     this.avatarCard(huang, 1090, 320, 1.2, '', '#ffd7a8');
     this.add
-      .text(995, 470, '潘尔赛', {
+      .text(900, 458, pan.name, {
         fontFamily: FONT,
-        fontSize: '26px',
+        fontSize: '24px',
         color: '#fff3d6',
         fontStyle: 'bold',
       })
       .setOrigin(0.5);
     this.add
-      .text(995, 502, '平底锅 · 螃蟹', { fontFamily: FONT, fontSize: '16px', color: '#c9b48a' })
+      .text(900, 488, '平底锅 · 螃蟹', { fontFamily: FONT, fontSize: '15px', color: '#c9b48a' })
       .setOrigin(0.5);
     this.add
-      .text(995, 528, '贴身硬刚', { fontFamily: FONT, fontSize: '16px', color: '#9d8a67' })
+      .text(900, 512, '贴身硬刚', { fontFamily: FONT, fontSize: '14px', color: '#9d8a67' })
       .setOrigin(0.5);
 
     this.add
-      .text(1130, 528, '黄姐', { fontFamily: FONT, fontSize: '20px', color: '#fff3d6' })
+      .text(1090, 458, huang.name, {
+        fontFamily: FONT,
+        fontSize: '24px',
+        color: '#fff3d6',
+        fontStyle: 'bold',
+      })
+      .setOrigin(0.5);
+    this.add
+      .text(1090, 488, '榴莲 · 针头', { fontFamily: FONT, fontSize: '15px', color: '#c9b48a' })
+      .setOrigin(0.5);
+    this.add
+      .text(1090, 512, '远程拉扯', { fontFamily: FONT, fontSize: '14px', color: '#9d8a67' })
       .setOrigin(0.5);
   }
 

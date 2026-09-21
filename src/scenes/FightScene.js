@@ -27,7 +27,7 @@ const FACING_VEC = {
 };
 
 /**
- * 第一关：桂圆银行门口的街道，杨凡 1v2 打潘尔赛和黄姐。
+ * 第一关：桂圆银行门口的街道，泡面杨 1v2 打神雕侠侣（潘尔赛 + 黄姐）。
  * 场景负责：输入、命中结算、道具、攻击令牌、胜负。
  */
 export default class FightScene extends Phaser.Scene {
@@ -62,7 +62,7 @@ export default class FightScene extends Phaser.Scene {
     this.phase = 'intro';
     setIntensity('title');
 
-    // 镜头：世界比画面宽一倍，跟着杨凡横向滚；竖直方向因为世界和画面同高，等于不动
+    // 镜头：世界比画面宽一倍，跟着泡面杨横向滚；竖直方向因为世界和画面同高，等于不动
     this.cameras.main.setBounds(0, 0, STAGE.world.width, STAGE.world.height);
     this.cameras.main.startFollow(this.player, true, 0.12, 0.12);
     this.cameras.main.setDeadzone(220, 140);

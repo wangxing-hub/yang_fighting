@@ -42,9 +42,7 @@ export const SHEETS = {
 export const CHARACTERS = {
   yang: {
     id: 'yang',
-    name: '杨凡',
-    /** 对话里用的外号（他扔泡面，所以叫泡面杨） */
-    nick: '泡面杨',
+    name: '泡面杨',
     avatar: 'avatar-yang',
     walkSheet: 'yang_walk',
     walkFps: 4.5,
@@ -78,7 +76,6 @@ export const CHARACTERS = {
   pan: {
     id: 'pan',
     name: '潘尔赛',
-    nick: '潘尔赛',
     avatar: 'avatar-pan',
     walkSheet: 'pan_walk',
     walkFps: 4.5,
@@ -119,7 +116,6 @@ export const CHARACTERS = {
   huang: {
     id: 'huang',
     name: '黄姐',
-    nick: '黄姐',
     avatar: 'avatar-huang',
     // 常态移动换成「护士黄姐移动雪碧图」：这张 6 帧是同一个朝向的走路循环
     // （每帧轮廓宽度都在 369~394 之间，说明不是四方向姿势），所以四个方向都用这套循环。
@@ -168,7 +164,7 @@ export const CHARACTERS = {
 
 /** 飞行道具。low=true 的贴着地面飞，可以跳过去 */
 export const PROJECTILES = {
-  noodle: { tex: 'prop-noodle', kind: 'arc', speed: 620, gravity: 300, z: 96, damage: 13, r: 28, spin: 340, life: 2800 },
+  noodle: { tex: 'prop-noodle', kind: 'arc', speed: 620, gravity: 300, z: 96, damage: 13, r: 26, spin: 220, life: 2800 },
   pan: { tex: 'prop-pan', kind: 'straight', speed: 780, gravity: 0, z: 104, damage: 12, r: 32, spin: 900, life: 2200 },
   crab: { tex: 'prop-crab', kind: 'arc', speed: 520, gravity: 480, z: 54, damage: 10, r: 28, spin: 200, life: 2800, low: true },
   durian: { tex: 'prop-durian', kind: 'arc', speed: 460, gravity: 620, z: 150, damage: 16, r: 32, spin: 240, life: 3200 },
@@ -197,7 +193,7 @@ export const COMBAT = {
 export const STAGE = {
   artKey: 'street-bg',
   /**
-   * 世界比画面宽多了：整条街 1280*2 宽，镜头跟着杨凡横向滚。
+   * 世界比画面宽多了：整条街 1280*2 宽，镜头跟着泡面杨横向滚。
    * 街景是代码画的，想画多宽改这一个数就行。
    */
   world: { width: 2560, height: GAME_HEIGHT },
