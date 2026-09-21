@@ -1,0 +1,28 @@
+{
+  "image": "huang_durian.png",
+  "sheet": "huang_durian",
+  "character": "huang",
+  "role": "durian",
+  "frameWidth": 339,
+  "frameHeight": 379,
+  "frames": 6,
+  "source": "黄姐投掷榴莲动作精灵图.png",
+  "sourceCellSize": [
+    832,
+    832
+  ],
+  "cropBox": [
+    35,
+    38,
+    679,
+    759
+  ],
+  "downscale": 2,
+  "feet": [
+    239.0,
+    377.0
+  ],
+  "unit": 375.0,
+  "refFrame": 0,
+  "note": "feet 是脚底中心在帧内的坐标，unit 是参考帧人物高度；scale=目标高度/unit。"
+}

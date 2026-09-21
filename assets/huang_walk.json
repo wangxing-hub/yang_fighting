@@ -1,0 +1,28 @@
+{
+  "image": "huang_walk.png",
+  "sheet": "huang_walk",
+  "character": "huang",
+  "role": "walk",
+  "frameWidth": 240,
+  "frameHeight": 286,
+  "frames": 9,
+  "source": "黄姐移动精灵图.png",
+  "sourceCellSize": [
+    672,
+    672
+  ],
+  "cropBox": [
+    74,
+    71,
+    481,
+    573
+  ],
+  "downscale": 2,
+  "feet": [
+    124.5,
+    283.0
+  ],
+  "unit": 281.5,
+  "refFrame": 0,
+  "note": "feet 是脚底中心在帧内的坐标，unit 是参考帧人物高度；scale=目标高度/unit。"
+}

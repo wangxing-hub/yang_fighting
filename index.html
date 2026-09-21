@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="theme-color" content="#15100d" />
+    <title>杨凡大战潘尔赛</title>
+    <link rel="icon" href="data:," />
+    <style>
+      :root {
+        color-scheme: dark;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+        overflow: hidden;
+        /* 手机上不要有滚动 / 长按选中 / 双击缩放 */
+        overscroll-behavior: none;
+        touch-action: none;
+        -webkit-user-select: none;
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+        background: radial-gradient(circle at 50% 35%, #2c2320 0%, #171210 65%, #0d0a09 100%);
+        font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      }
+      #game-root {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        touch-action: none;
+      }
+      #game-root canvas {
+        touch-action: none;
+        border-radius: 10px;
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+      }
+      /*
+       * 手机模式 + 竖屏视口（浏览器不肯转，或者系统锁了竖屏）时的兜底：
+       * 把画布自己转 90° 铺满屏幕，玩家把手机横过来就能玩。
+       * 用 !important 是为了压住 Phaser 每次 refresh 写进 canvas 的行内宽高。
+       */
+      body.forced-landscape #game-root {
+        position: fixed;
+        inset: 0;
+      }
+      body.forced-landscape #game-root canvas {
+        position: absolute !important;
+        left: 50% !important;
+        top: 50% !important;
+        margin: 0 !important;
+        width: var(--forced-canvas-w, 100%) !important;
+        height: var(--forced-canvas-h, 100%) !important;
+        transform: translate(-50%, -50%) rotate(90deg);
+      }
+      #rotate-hint {
+        position: fixed;
+        inset: 0;
+        display: none;
+        pointer-events: none;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 14px;
+        z-index: 20;
+        background: rgba(12, 9, 7, 0.96);
+        color: #f2e6cc;
+        letter-spacing: 1px;
+        text-align: center;
+        padding: 24px;
+      }
+      #rotate-hint .rotate-icon {
+        font-size: 54px;
+        animation: rotate-tip 1.8s ease-in-out infinite;
+      }
+      #rotate-hint .rotate-title {
+        font-size: 20px;
+        font-weight: 600;
+      }
+      #rotate-hint .rotate-sub {
+        font-size: 14px;
+        color: #b9a884;
+        line-height: 1.7;
+      }
+      @keyframes rotate-tip {
+        0%,
+        40% {
+          transform: rotate(0deg);
+        }
+        70%,
+        100% {
+          transform: rotate(90deg);
+        }
+      }
+      #loading {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #d9c39a;
+        font-size: 16px;
+        letter-spacing: 2px;
+        pointer-events: none;
+      }
+      #boot-error {
+        position: fixed;
+        left: 12px;
+        bottom: 12px;
+        max-width: 70vw;
+        color: #ff9aa2;
+        font-size: 13px;
+        white-space: pre-wrap;
+        z-index: 10;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="game-root"></div>
+    <div id="loading">正在加载游戏…</div>
+    <div id="boot-error"></div>
+    <div id="rotate-hint">
+      <div class="rotate-icon">📱</div>
+      <div class="rotate-title">请把手机横过来</div>
+      <div class="rotate-sub">手机模式是横屏玩的<br />转一下手机就能继续</div>
+    </div>
+
+    <script>
+      // 页面出错时把信息显示出来，方便排查（也方便自动化检查）
+      window.addEventListener('error', (e) => {
+        const el = document.getElementById('boot-error');
+        if (el) el.textContent = `脚本错误：${e.message}`;
+        document.title = `ERROR: ${e.message}`;
+      });
+      window.addEventListener('unhandledrejection', (e) => {
+        const el = document.getElementById('boot-error');
+        if (el) el.textContent = `未处理的 Promise 错误：${e.reason}`;
+        document.title = `ERROR: ${e.reason}`;
+      });
+    </script>
+    <script src="vendor/phaser.min.js"></script>
+    <script type="module" src="src/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,28 @@
+{
+  "image": "huang_nurse.png",
+  "sheet": "huang_nurse",
+  "character": "huang",
+  "role": "nurse",
+  "frameWidth": 212,
+  "frameHeight": 380,
+  "frames": 6,
+  "source": "护士黄姐移动雪碧图.png",
+  "sourceCellSize": [
+    832,
+    832
+  ],
+  "cropBox": [
+    213,
+    42,
+    425,
+    760
+  ],
+  "downscale": 2,
+  "feet": [
+    111.8,
+    377.5
+  ],
+  "unit": 376.0,
+  "refFrame": 0,
+  "note": "feet 是脚底中心在帧内的坐标，unit 是参考帧人物高度；scale=目标高度/unit。"
+}

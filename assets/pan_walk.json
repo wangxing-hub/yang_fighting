@@ -1,0 +1,28 @@
+{
+  "image": "pan_walk.png",
+  "sheet": "pan_walk",
+  "character": "pan",
+  "role": "walk",
+  "frameWidth": 199,
+  "frameHeight": 317,
+  "frames": 9,
+  "source": "潘尔赛的人物精灵图.png",
+  "sourceCellSize": [
+    672,
+    672
+  ],
+  "cropBox": [
+    122,
+    23,
+    399,
+    634
+  ],
+  "downscale": 2,
+  "feet": [
+    100.2,
+    312.5
+  ],
+  "unit": 311.0,
+  "refFrame": 0,
+  "note": "feet 是脚底中心在帧内的坐标，unit 是参考帧人物高度；scale=目标高度/unit。"
+}

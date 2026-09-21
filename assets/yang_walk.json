@@ -1,0 +1,28 @@
+{
+  "image": "yang_walk.png",
+  "sheet": "yang_walk",
+  "character": "yang",
+  "role": "walk",
+  "frameWidth": 180,
+  "frameHeight": 321,
+  "frames": 9,
+  "source": "杨凡移动精灵图.png",
+  "sourceCellSize": [
+    672,
+    672
+  ],
+  "cropBox": [
+    129,
+    17,
+    360,
+    643
+  ],
+  "downscale": 2,
+  "feet": [
+    99.0,
+    317.5
+  ],
+  "unit": 314.5,
+  "refFrame": 0,
+  "note": "feet 是脚底中心在帧内的坐标，unit 是参考帧人物高度；scale=目标高度/unit。"
+}

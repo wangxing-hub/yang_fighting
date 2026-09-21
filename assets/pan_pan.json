@@ -1,0 +1,28 @@
+{
+  "image": "pan_pan.png",
+  "sheet": "pan_pan",
+  "character": "pan",
+  "role": "pan",
+  "frameWidth": 389,
+  "frameHeight": 373,
+  "frames": 6,
+  "source": "潘投掷平底锅动作雪碧图.png",
+  "sourceCellSize": [
+    832,
+    832
+  ],
+  "cropBox": [
+    0,
+    50,
+    778,
+    746
+  ],
+  "downscale": 2,
+  "feet": [
+    245.2,
+    370.5
+  ],
+  "unit": 369.0,
+  "refFrame": 0,
+  "note": "feet 是脚底中心在帧内的坐标，unit 是参考帧人物高度；scale=目标高度/unit。"
+}

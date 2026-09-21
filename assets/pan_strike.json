@@ -1,0 +1,28 @@
+{
+  "image": "pan_strike.png",
+  "sheet": "pan_strike",
+  "character": "pan",
+  "role": "strike",
+  "frameWidth": 359,
+  "frameHeight": 373,
+  "frames": 6,
+  "source": "潘尔赛的空手投掷动作.png",
+  "sourceCellSize": [
+    832,
+    832
+  ],
+  "cropBox": [
+    83,
+    49,
+    719,
+    747
+  ],
+  "downscale": 2,
+  "feet": [
+    216.5,
+    371.0
+  ],
+  "unit": 369.5,
+  "refFrame": 0,
+  "note": "feet 是脚底中心在帧内的坐标，unit 是参考帧人物高度；scale=目标高度/unit。"
+}

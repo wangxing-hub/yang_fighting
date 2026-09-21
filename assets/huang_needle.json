@@ -1,0 +1,28 @@
+{
+  "image": "huang_needle.png",
+  "sheet": "huang_needle",
+  "character": "huang",
+  "role": "needle",
+  "frameWidth": 366,
+  "frameHeight": 369,
+  "frames": 6,
+  "source": "黄姐投掷针头.png",
+  "sourceCellSize": [
+    832,
+    832
+  ],
+  "cropBox": [
+    44,
+    51,
+    733,
+    738
+  ],
+  "downscale": 2,
+  "feet": [
+    210.8,
+    366.5
+  ],
+  "unit": 364.0,
+  "refFrame": 0,
+  "note": "feet 是脚底中心在帧内的坐标，unit 是参考帧人物高度；scale=目标高度/unit。"
+}

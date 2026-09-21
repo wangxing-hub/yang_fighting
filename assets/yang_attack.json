@@ -1,0 +1,28 @@
+{
+  "image": "yang_attack.png",
+  "sheet": "yang_attack",
+  "character": "yang",
+  "role": "attack",
+  "frameWidth": 344,
+  "frameHeight": 375,
+  "frames": 6,
+  "source": "杨攻击动作雪碧图.png",
+  "sourceCellSize": [
+    832,
+    832
+  ],
+  "cropBox": [
+    143,
+    66,
+    689,
+    751
+  ],
+  "downscale": 2,
+  "feet": [
+    168.0,
+    371.0
+  ],
+  "unit": 369.5,
+  "refFrame": 0,
+  "note": "feet 是脚底中心在帧内的坐标，unit 是参考帧人物高度；scale=目标高度/unit。"
+}

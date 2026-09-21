@@ -1,0 +1,28 @@
+{
+  "image": "yang_noodle.png",
+  "sheet": "yang_noodle",
+  "character": "yang",
+  "role": "noodle",
+  "frameWidth": 369,
+  "frameHeight": 374,
+  "frames": 6,
+  "source": "杨投掷泡面动作雪碧图.png",
+  "sourceCellSize": [
+    832,
+    832
+  ],
+  "cropBox": [
+    93,
+    67,
+    739,
+    748
+  ],
+  "downscale": 2,
+  "feet": [
+    193.5,
+    368.5
+  ],
+  "unit": 367.0,
+  "refFrame": 0,
+  "note": "feet 是脚底中心在帧内的坐标，unit 是参考帧人物高度；scale=目标高度/unit。"
+}

@@ -1,0 +1,12 @@
+{
+  "name": "yang-fighting",
+  "version": "0.1.0",
+  "private": true,
+  "description": "《杨凡大战潘尔赛》第一关 · 松鸭湖 1v2（Phaser 3）",
+  "type": "module",
+  "scripts": {
+    "start": "node tools/dev-server.js",
+    "assets": "python3 tools/build_assets.py",
+    "shot": "node tools/screenshot.mjs"
+  }
+}

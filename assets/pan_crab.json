@@ -1,0 +1,28 @@
+{
+  "image": "pan_crab.png",
+  "sheet": "pan_crab",
+  "character": "pan",
+  "role": "crab",
+  "frameWidth": 380,
+  "frameHeight": 374,
+  "frames": 6,
+  "source": "潘投掷螃蟹动作雪碧图.png",
+  "sourceCellSize": [
+    832,
+    832
+  ],
+  "cropBox": [
+    0,
+    49,
+    760,
+    749
+  ],
+  "downscale": 2,
+  "feet": [
+    250.2,
+    372.0
+  ],
+  "unit": 370.5,
+  "refFrame": 0,
+  "note": "feet 是脚底中心在帧内的坐标，unit 是参考帧人物高度；scale=目标高度/unit。"
+}
